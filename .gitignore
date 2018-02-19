@@ -1,0 +1,7 @@
+.idea/
+__pycache__/
+
+.DS_Store
+
+retrained_graph.pb
+retrained_labels.txt
