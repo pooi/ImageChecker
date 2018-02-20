@@ -270,7 +270,7 @@ if __name__ == "__main__":
                             os.remove(fname)
                             remove_count += 1
 
-            print("Removed %d images"%remove_count)
+            print("Removed %d images" % remove_count)
         except Exception as e:
             print(e)
         finally:

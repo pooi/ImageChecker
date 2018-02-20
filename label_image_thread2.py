@@ -18,8 +18,9 @@ from __future__ import division
 from __future__ import print_function
 
 import argparse
-import os
+import os, time
 from PIL import Image
+
 
 import numpy as np
 import tensorflow as tf
@@ -215,6 +216,7 @@ if __name__ == "__main__":
             print("Found %d image." % total_image_count)
 
         queue = Queue()
+        queueList = []
         remove_list = []
 
         for i in range(num_of_thread):
@@ -230,9 +232,33 @@ if __name__ == "__main__":
                 item = []
                 item.append(key)
                 item.append(fname)
+                queueList.append(item)
+                # queue.put(item)
+
+        DIV = 100
+        length = len(queueList)
+        for step in range((length // DIV) + 1):
+            print("Start", (step+1), "/", ((length // DIV) + 1))
+            start_time = time.time()
+            queue = Queue()
+            threads = []
+
+            for i in range(num_of_thread):
+                checker = Checker(i, queue, graph, output_operation, input_operation, labels, base_accuracy,
+                                  DIV, remove_list)
+                checker.daemon = True
+                threads.append(checker)
+                checker.start()
+
+            for item in queueList[step * DIV : min((step + 1) * DIV, length)]:
                 queue.put(item)
 
-        queue.join()
+
+            queue.join()
+            del threads
+            print("Step", (step+1), "| Removed %d images" % len(remove_list))
+            print("--- %s seconds ---" % (time.time() - start_time))
+            print()
 
         print("Removed %d images" % len(remove_list))
     except Exception as e:
