@@ -10,12 +10,11 @@ from queue import Queue
 
 class Checker(Thread):
 
-    def __init__(self, num, queue, graph, output_operation, input_operation, labels, base_accuracy, total_count, remove_list):
+    def __init__(self, num, queue, sess, output_operation, input_operation, labels, base_accuracy, total_count, remove_list):
         Thread.__init__(self)
         self.num = num
         self.queue = queue
-        self.graph = graph
-        self.sess = tf.Session(graph=self.graph)
+        self.sess = sess
         self.output_operation = output_operation
         self.input_operation = input_operation
         self.labels = labels
@@ -187,13 +186,14 @@ class Checker(Thread):
         while True:
             self.count += 1
             if self.count % 13 == 0:
-                self.sess.close()
-                del self.sess
-                self.sess = None
-                self.sess = tf.Session(graph=self.graph)
-                print(self.num, "Session create.", self.sess)
+                # self.sess.close()
+                # del self.sess
+                # self.sess = None
+                # self.sess = tf.Session(graph=self.graph)
+                # print(self.num, "Session create.", self.sess)
                 # gc.collect()
                 # print(self.num, "Execute Garbage Collector")
+                pass
             # if self.count % 100 == 0:
             #     gc.collect()
             #     print(self.num, "Execute Garbage Collector")

@@ -5,3 +5,5 @@ python3 label_image.py --labels=discovery10/retrained_labels.txt --graph=discove
 python3 label_image_thread.py --labels=discovery20/retrained_labels.txt --graph=discovery20/retrained_graph.pb --thread=4 --accuracy=0.9 --dir=/Volumes/taewoo/work
 
 python3 label_image_thread2.py --labels=discovery20/retrained_labels.txt --graph=discovery20/retrained_graph.pb --thread=4 --accuracy=0.9 --dir=/Volumes/taewoo/work
+
+python3 label_image_thread3.py --labels=discovery10/retrained_labels.txt --graph=discovery10/retrained_graph.pb --thread=4 --accuracy=0.8 --dir=/Volumes/taewoo/work
